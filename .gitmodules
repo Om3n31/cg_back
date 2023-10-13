@@ -1,3 +1,4 @@
 [submodule "cg_engine"]
 	path = cg_engine
 	url = https://github.com/Om3n31/cg_engine.git
+	branch = master
