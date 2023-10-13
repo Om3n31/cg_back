@@ -1,0 +1,1 @@
+pip install -e "./cg_engine/" && python manage.py runserver 0.0.0.0:8000
