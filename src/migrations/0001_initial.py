@@ -40,8 +40,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.TextField()),
-                ('hdf5', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='cg_back.src.hdf5')),
-                ('layers', models.ManyToManyField(blank=True, to='cg_back.src.layer')),
+                ('hdf5', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='src.hdf5')),
+                ('layers', models.ManyToManyField(blank=True, to='src.layer')),
             ],
         ),
         migrations.CreateModel(
@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
             name='Workspace',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cortex', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='cg_back.src.cortex')),
+                ('cortex', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='src.cortex')),
             ],
         ),
         migrations.CreateModel(
@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('option_name', models.TextField()),
-                ('option', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='cg_back.src.tflayertypeoption')),
+                ('option', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='src.tflayertypeoption')),
             ],
         ),
         migrations.CreateModel(
@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.TextField()),
-                ('options', models.ManyToManyField(blank=True, to='cg_back.src.tflayertypeoption')),
+                ('options', models.ManyToManyField(blank=True, to='src.tflayertypeoption')),
             ],
         ),
         migrations.CreateModel(
@@ -81,21 +81,21 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nn_position', models.IntegerField(choices=[(0, 'FIRST'), (1, 'MIDDLE'), (2, 'LAST')], default=1)),
-                ('cortex', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='cg_back.src.cortex')),
-                ('neural_network', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='cg_back.src.neuralnetwork')),
-                ('next_neural_network', models.ManyToManyField(blank=True, to='cg_back.src.neuralnetworkconfig')),
-                ('previous_neural_network', models.ManyToManyField(blank=True, to='cg_back.src.neuralnetworkconfig')),
+                ('cortex', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='src.cortex')),
+                ('neural_network', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='src.neuralnetwork')),
+                ('next_neural_network', models.ManyToManyField(blank=True, to='src.neuralnetworkconfig')),
+                ('previous_neural_network', models.ManyToManyField(blank=True, to='src.neuralnetworkconfig')),
             ],
             bases=(models.Model, cg_engine.src.main_lib.iNeuralNetwork.INeuralNetwork),
         ),
         migrations.AddField(
             model_name='layer',
             name='options',
-            field=models.ManyToManyField(blank=True, to='cg_back.src.tfoption'),
+            field=models.ManyToManyField(blank=True, to='src.tfoption'),
         ),
         migrations.AddField(
             model_name='layer',
             name='type',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='cg_back.src.tflayertype'),
+            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='src.tflayertype'),
         ),
     ]
