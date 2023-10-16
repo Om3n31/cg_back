@@ -6,7 +6,6 @@ from cg_engine.src.main_lib.iNeuralNetwork import Position
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
- 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -26,17 +25,19 @@ class TFLayerType(models.Model):
     options = models.ManyToManyField(to=TFLayerTypeOption, blank=True)
 
 class TFOption(models.Model):
-    option = models.OneToOneField(TFLayerTypeOption, on_delete=models.CASCADE)
-    option_name = models.TextField()
+    option = models.ForeignKey(TFLayerTypeOption, on_delete=models.CASCADE)
+    option_value = models.TextField()
 
 class Layer(models.Model):
-    name = models.TextField()
-    type = models.OneToOneField(TFLayerType, null=True, on_delete=models.CASCADE)
+    name = models.TextField(blank = True, null = True)
+    type = models.ForeignKey(TFLayerType, null=True, on_delete=models.CASCADE)
     options = models.ManyToManyField(TFOption, blank=True)
 
 class NeuralNetwork(models.Model):
     hdf5 = models.ForeignKey(HDF5, null=True, on_delete=models.CASCADE)
     # input_shape = models.JSONField()  # int table
+    name = models.TextField(blank = True, null = True)
+    layers = models.ManyToManyField(Layer, blank=True)
 
     name = models.TextField()
     layers = models.ManyToManyField(Layer, blank=True)
