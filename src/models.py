@@ -24,23 +24,21 @@ class TFLayerType(models.Model):
     name = models.TextField() 
     options = models.ManyToManyField(to=TFLayerTypeOption, blank=True)
 
-class TFOption(models.Model):
-    option = models.ForeignKey(TFLayerTypeOption, on_delete=models.CASCADE)
-    option_value = models.TextField()
-
-class Layer(models.Model):
-    name = models.TextField(blank = True, null = True)
-    type = models.ForeignKey(TFLayerType, null=True, on_delete=models.CASCADE)
-    options = models.ManyToManyField(TFOption, blank=True)
-
 class NeuralNetwork(models.Model):
     hdf5 = models.ForeignKey(HDF5, null=True, on_delete=models.CASCADE)
     # input_shape = models.JSONField()  # int table
-    name = models.TextField(blank = True, null = True)
-    layers = models.ManyToManyField(Layer, blank=True)
-
     name = models.TextField()
-    layers = models.ManyToManyField(Layer, blank=True)
+
+class Layer(models.Model):
+    name = models.TextField()
+    type = models.ForeignKey(TFLayerType, null=True, on_delete=models.CASCADE)
+    position = models.IntegerField()
+    neural_network = models.ForeignKey(NeuralNetwork, on_delete=models.CASCADE)
+
+class TFOption(models.Model):
+    option = models.ForeignKey(TFLayerTypeOption, on_delete=models.CASCADE)
+    option_value = models.TextField()
+    layer = models.ForeignKey(Layer, on_delete=models.CASCADE)
 
 class Cortex(models.Model):
     metadata = models.TextField()  # string
