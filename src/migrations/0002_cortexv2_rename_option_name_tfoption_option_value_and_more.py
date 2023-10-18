@@ -18,11 +18,6 @@ class Migration(migrations.Migration):
                 ('name', models.TextField(default=None)),
             ],
         ),
-        migrations.RenameField(
-            model_name='tfoption',
-            old_name='option_name',
-            new_name='option_value',
-        ),
         migrations.AlterField(
             model_name='layer',
             name='name',
