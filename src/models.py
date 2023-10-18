@@ -40,6 +40,14 @@ class TFOption(models.Model):
     option_value = models.TextField()
     layer = models.ForeignKey(Layer, on_delete=models.CASCADE)
 
+class CortexV2(models.Model):
+    name = models.TextField(default=None)
+
+class Link(models.Model):
+    from_network = models.ForeignKey(NeuralNetwork, null=False, on_delete=models.CASCADE, related_name='from_network')
+    to_network = models.ForeignKey(NeuralNetwork, null=False, on_delete=models.CASCADE, related_name='to_network')
+    cortex = models.ForeignKey(CortexV2, null=False, on_delete=models.CASCADE)
+    
 class Cortex(models.Model):
     metadata = models.TextField()  # string
 
